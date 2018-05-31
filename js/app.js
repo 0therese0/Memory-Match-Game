@@ -1,32 +1,30 @@
 // VARIABLE DECLARATIONS
-//  GET CARDS ELEMENT
-let card = document.getElementsByClassName("card");
-let cards = [...card]
-console.log("Cards array: ", cards);
-// STARS FOR RATING
-const stars = document.querySelectorAll(".fa-star");
-// DECK OF CARDS
-const deck = document.getElementById("deck-of-cards");
-// MOVE COUNTER
-let moves = 0;
-let counter = document.querySelector(".moves");
-// MATCHED CARDS
-let matchedCard = document.getElementsByClassName("match");
-// RESTART BUTTON
-const restartBtn = document.querySelector('#restart');
-// PLAY AGAIN BUTTON
-const playAgain = document.getElementById("replay");
-// ARRAY FOR OPENED CARDS
-let openedCards = [];
-// GET MODAL ELEMENT
-let modal = document.getElementById("simpleModal");
-// GET CLOSE BUTTON ELEMENT
-let closeBtn = document.getElementsByClassName("closeBtn")[0];
+const stars = document.querySelectorAll(".fa-star"),
+    deck = document.getElementById("deck-of-cards"),
+    restartBtn = document.querySelector('#restart'),
+    playAgain = document.getElementById("replay"),
+    counter = document.querySelector(".moves"),
+    matchedCard = document.getElementsByClassName("match"),
+    modal = document.getElementById("simpleModal"),
+    closeBtn = document.getElementsByClassName("closeBtn")[0],
+    timer = document.querySelector(".timer");
+
+let card = document.getElementsByClassName("card"),
+    cards = [...card],
+    openedCards = [],
+    moves = 0,
+    second = 1,
+    minute = 0,
+    hour = 0,
+    interval;
 
 // MEMORY GAME INSPIRATION FROM https://scotch.io/tutorials
 // FUNCTION TO SHUFFLE CARDS http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -45,7 +43,7 @@ function startGame() {
     // SHUFFLE CARD
     cards = shuffle(cards);
     // REMOVE ALL EXISTING CLASSES FROM EACH CARD
-    for (var x = 0; x < cards.length; x++) {
+    for (let x = 0; x < cards.length; x++) {
         deck.innerHTML = "";
         [].forEach.call(cards, function(item) {
             deck.appendChild(item);
@@ -56,7 +54,7 @@ function startGame() {
     moves = 0;
     counter.innerHTML = moves;
     // RATING RESET
-    for (var x = 0; x < stars.length; x++) {
+    for (let x = 0; x < stars.length; x++) {
         stars[x].style.color = "#FFD700";
         stars[x].style.visibility = "visible";
     }
@@ -65,22 +63,21 @@ function startGame() {
     minute = 0;
     hour = 0;
     // TIMER
-    var timer = document.querySelector(".timer");
+    let timer = document.querySelector(".timer");
     timer.innerHTML = "0 mins 0 secs";
     clearInterval(interval);
 }
 
 // FUNCTION TO CHECK IF CARDS ARE MATCHED
 function cardOpen() {
-
     if (openedCards.length === 2){
         return;
     } else {
 
-    //Flip the card
-    this.classList.toggle("open");
-    this.classList.toggle("show");
-    this.classList.toggle("disabled");
+        // FLIP THE CARD
+        this.classList.toggle("open");
+        this.classList.toggle("show");
+        this.classList.toggle("disabled");
         moves++;
         console.log("Moves is: " + moves); // DEBUG
 
@@ -141,7 +138,7 @@ function enable() {
     console.log("enable called"); // DEBUG
     Array.prototype.filter.call(cards, function(card) {
         card.classList.remove("disabled");
-        for(var x = 0; x < matchedCard.length; x++) {
+        for(let x = 0; x < matchedCard.length; x++) {
             matchedCard[x].classList.add("disabled");
         }
     });
@@ -155,27 +152,20 @@ function moveCounter() {
     counter.innerHTML = moves / 2;
     // FOR STAR RATING CALCULATION
     if(moves > 24 && moves < 38) {
-        for (x = 0; x < 3; x++) {
+        for (let x = 0; x < 3; x++) {
             if(x > 1) {
                 stars[x].style.visibility = "collapse";
             }
         }
     }
     else if( moves > 39 ) {
-        for (x = 0; x < 3; x++) {
+        for (let x = 0; x < 3; x++) {
             if(x > 0) {
                 stars[x].style.visibility = "collapse";
             }
         }
     }
 }
-
-// TIMER
-var second = 1,
-    minute = 0,
-    hour = 0;
-var timer = document.querySelector(".timer");
-var interval;
 
 // FUNCTION TO START TIMER
 function startTimer() {
@@ -198,15 +188,12 @@ function congratulations() {
     console.log("congratulations called.  matchedCard.length="+ matchedCard.length); //DEBUG
     if (matchedCard.length == 16){
         clearInterval(interval);
-        finalTime = timer.innerHTML;
         // SHOW CONGRATULATIONS MODAL
         openModal();
-        // STAR RATINGS VARIABLE
-        var starRating = document.querySelector(".stars").outerHTML;
         // SHOW STATS(MOVE, TIME AND RATING) ON MODAL
         document.getElementById("finalMove").innerHTML = moves / 2;
-        document.getElementById("totalTime").innerHTML = finalTime;
-        document.getElementById("finalRating").innerHTML = starRating;
+        document.getElementById("totalTime").innerHTML = timer.innerHTML;
+        document.getElementById("finalRating").innerHTML = document.querySelector(".stars").outerHTML;
     };
 }
 
@@ -221,14 +208,14 @@ function closeModal() {
 }
 
 // FUNCTION TO CLOSE MODAL IF CLICKED OUTSIDE
-function outsideClick(x) {
-    if(x.target == modal) {
+function outsideClick(event) {
+    if(event.target == modal) {
         modal.style.display = "none";
     }
 }
 
 // ADD EVENT LISTENER TO CARD
-for(var x = 0; x < cards.length; x++) {
+for(let x = 0; x < cards.length; x++) {
     card = cards[x];
     card.addEventListener("click", cardOpen);
 };
