@@ -1,4 +1,4 @@
-## Memory Game Project
+# Memory Match Game
 
 This is Udacity's second project for Front-End Web Developer Nanodegree Program.  A simple memory match game that randomly shuffles cards. 
 
