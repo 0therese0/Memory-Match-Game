@@ -70,19 +70,10 @@ function startGame() {
     clearInterval(interval);
 }
 
-// TOGGLES OPEN AND SHOW TO FLIP CARDS AND DISABLE CLICK WHEN MATCHED
-// // var flipCard = function() {
-//     this.classList.toggle("open");
-//     this.classList.toggle("show");
-//     this.classList.toggle("disabled");
-// };
-
 // FUNCTION TO CHECK IF CARDS ARE MATCHED
 function cardOpen() {
 
     if (openedCards.length === 2){
-        // Number of open cards is already 2 so don't
-        // allow any more cards to be flipped just exit.
         return;
     } else {
 
@@ -90,9 +81,6 @@ function cardOpen() {
     this.classList.toggle("open");
     this.classList.toggle("show");
     this.classList.toggle("disabled");
-        // Number of open cards isn't 2 so increment
-        // move, push on openCards array flip card and
-        // continue.
         moves++;
         console.log("Moves is: " + moves); // DEBUG
 
